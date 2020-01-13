@@ -1,0 +1,96 @@
+{% extends "login/base.html" %}
+{% block content %}
+
+
+<nav id="header-nav" class="navbar navbar-default">
+	<div class="container">
+		<h3 class="align">This is Round 1.</h3>
+		  <div class="dropdown">
+    		<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
+    			<span class="caret"></span></button>
+    		<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+    		
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Apple - {{ user.profile.Apple }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Amazon - {{ user.profile.Amazon }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Microsoft - {{ user.profile.Microsoft }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Alphabet - {{ user.profile.Alphabet }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Berkshire Hathaway - {{ user.profile.Berkshire }}</a></li>
+      			<li role="presentation" class="divider"></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Facebook  - {{ user.profile.Facebook }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tencent  - {{ user.profile.Tencent }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Alibaba Group - {{ user.profile.Alibaba }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Johnson & Johnson - {{ user.profile.Johnson }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">JPMorgan Chase - {{ user.profile.JPMorgan }}</a></li>
+    		</ul>
+  		</div>
+		<h3>Money left: {{ user.profile.money }}</h3>
+	</div>	
+</nav>	
+
+<!-- Timer-->
+<div class="navbar-fixed-top bg-danger shadow p-2 text-center mb-5 text-white ">
+ 	<div class="container-fluid">
+    <p class="mb-0 font-weight-bold text-uppercase">Time Left</p>
+    <div id="space" class="countdown pt-4"></div>
+	</div>
+</div>
+ <!-- end -->
+
+<div class="padding">
+	<h3>Stock Prices</h3>
+	<ul>
+		{% for company in companys %}
+		<li>{{ company.company_name }} - {{ company.price1 }}</li><br>
+		{% endfor %}
+	</ul>
+</div>
+<nav id="header-nav" class="navbar navbar-default">
+	<div class="container">
+		<form action="{% url 'round1' %}" method="POST">
+			{% csrf_token %}
+			<select name="company_id">
+				{% for company in companys %}
+					<option value="{{ company.id }}">{{ company.company_name }}</option>
+				{% endfor %}	
+			</select>
+			
+			<select name="what">
+				<option value="buy">Buy</option>
+				<option value="sell">Sell</option>
+			</select>
+			<label for="amount">Buy(in Rs) Or Sell(in shares) </label>
+			<input type="number" name="amount" id="amount" placeholder="Enter Amount" step="0.01" min="0" required>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>	
+</nav>	
+
+<!-- Timer -->
+
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("{{ date.month }} {{ date.day }}, {{ date.year }} {{ date.hour }}:{{ date.minute }}:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("space").innerHTML = Math.floor(distance / 1000) + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("space").innerHTML = "EXPIRED";
+     window.location = "{% url 'round2' %}";
+  }
+}, 1000);
+</script>
+
+{% endblock content %}

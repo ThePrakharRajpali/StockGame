@@ -1,0 +1,67 @@
+
+header {
+	background-color: orange;
+}
+
+h1 {
+	color: white;
+}
+
+h2 {
+	color: white;
+} 
+
+/*ID Selectors*/
+#rules {
+	border-top: 2px solid lightblue;
+	border-bottom: 2px solid lightblue;
+}
+
+#header-nav {
+	background-color: orange;
+}
+
+/*Class Selectors*/
+.align {
+	text-align: center;
+}
+
+.padding {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.bottom {
+	padding-top: 60px;
+	padding-bottom: 0px;
+	border-bottom: solid 10px orange; 
+}
+
+
+/*pseudo selectors*/
+a:link {
+	color: orange; 
+}
+
+a:visited {
+	color: lightblue;
+}
+
+a:hover {
+	color: white;
+	background-color: orange;
+}
+
+a:active {
+	color: lightcoral;
+}
+
+.countdown {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/*.navbar-fixed-top {
+	position: fixed!important;
+	float: right!important;
+}*/

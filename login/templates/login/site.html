@@ -1,0 +1,58 @@
+{% extends "login/base.html" %}
+{% block content %}
+
+<nav id="header-nav" class="navbar navbar-default">
+	<div class="container">
+		<h2 class="align">This is Round 0.</h2>
+	</div>	
+</nav>
+
+<!-- Timer -->
+ <div class="bg-danger shadow p-2 text-center mb-5 text-white ">
+ 	<div class="container-fluid">
+    <p class="mb-0 font-weight-bold text-uppercase">Time Left</p>
+    <div id="space" class="countdown pt-4"></div>
+	</div>
+ </div>
+ <!-- end -->
+
+<p class="align padding">Contest will began shortly. Until then have a look at the stock price history of different companies whose stock you can buy.</p>
+<div class="padding">
+	<h3>Stock Prices</h3>
+<ul>
+	{% for company in companys %}
+	<li>{{ company.company_name }} - {{ company.price0 }}</li><br>
+	{% endfor %}
+</ul>
+</div>
+
+
+
+<!-- Timer -->
+
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("{{ date.month }} {{ date.day }}, {{ date.year }} {{ date.hour }}:{{ date.minute }}:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("space").innerHTML = Math.floor(distance / 1000) + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("space").innerHTML = "EXPIRED";
+    window.location = "{% url 'round1' %}";
+  }
+}, 1000);
+</script>
+{% endblock content %}
