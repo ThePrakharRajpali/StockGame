@@ -16,6 +16,31 @@ def site(request):
 			'date': date,
 		 })
 
+@login_required
+def detail(request, id):
+	c_name = str(company.objects.get(pk=id))  
+	if c_name == 'Apple':
+		return render(request, 'login/Apple.html', {'title': 'Details'})
+	elif c_name == 'Amazon':
+		return render(request, 'login/Amazon.html', {'title': 'Details'})	
+	elif c_name == 'Microsoft':
+		return render(request, 'login/Microsoft.html', {'title': 'Details'})
+	elif c_name == 'Alphabet':
+		return render(request, 'login/Alphabet.html', {'title': 'Details'})
+	elif c_name == 'Berkshire Hathaway':
+		return render(request, 'login/Berkshire.html', {'title': 'Details'})
+	elif c_name == 'Facebook':
+		return render(request, 'login/Facebook.html', {'title': 'Details'})
+	elif c_name == 'Tencent':
+		return render(request, 'login/Tencent.html', {'title': 'Details'})	
+	elif c_name == 'Alibaba Group':
+		return render(request, 'login/Alibaba.html', {'title': 'Details'})
+	elif c_name == 'Johnson & Johnson':
+		return render(request, 'login/Johnson.html', {'title': 'Details'})
+	elif c_name == 'JPMorgan Chase':
+		return render(request, 'login/JPMorgan.html', {'title': 'Details'})
+
+						
 
 @login_required
 def round1(request):

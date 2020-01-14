@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 class company(models.Model):
 	company_name = models.CharField(max_length=50)
+	sector = models.CharField(max_length=25, default="max cap")
+	cat = models.CharField(max_length=25, default="tec")
 	price0 = models.FloatField()
 	price1 = models.FloatField()
 	price2 = models.FloatField()

@@ -4,7 +4,7 @@
 
 <nav id="header-nav" class="navbar navbar-default">
 	<div class="container">
-		<h3 class="align">This is Round 7.</h3>
+		<h3 class="align">This is Round 4.(Last Round)</h3>
 		  <div class="dropdown">
     		<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
     			<span class="caret"></span></button>
@@ -37,13 +37,30 @@
  <!-- end -->
 
 <div class="padding">
-	<h3>Stock Prices</h3>
-	<ul>
-		{% for company in companys %}
-		<li>{{ company.company_name }} - {{ company.price7 }}</li><br>
-		{% endfor %}
-	</ul>
+  <table class="table table-dark">
+    <tr>
+      <th>Company</th>
+      <th>Sector</th>
+      <th>Category</th>
+      <th>Round 0 price</th>
+      <th>Round 1 price</th>
+      <th>Round 2 price</th>
+      <th>Round 3 price</th>
+    </tr>
+    {% for company in companys %}
+    <tr>
+      <th><a href="{% url 'details' company.id %}" target="_blank">{{ company.company_name }}</a></th>
+      <th>{{ company.sector }}</th>
+      <th>{{ company.cat }}</th>
+      <th>{{ company.price0 }}</th>
+      <th>{{ company.price1 }}</th>
+      <th>{{ company.price2 }}</th>
+      <th>{{ company.price3 }}</th>
+    </tr>
+    {% endfor %}
+  </table>
 </div>
+
 <nav id="header-nav" class="navbar navbar-default">
 	<div class="container">
 		<form action="{% url 'round7' %}" method="POST">
