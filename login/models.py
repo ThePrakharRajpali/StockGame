@@ -22,16 +22,14 @@ class company(models.Model):
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)		
 	money = models.FloatField(default=10000)
-	Apple = models.FloatField(default=0)
-	Amazon = models.FloatField(default=0)
-	Microsoft = models.FloatField(default=0)
-	Alphabet = models.FloatField(default=0)
-	Berkshire = models.FloatField(default=0)
-	Facebook = models.FloatField(default=0)
-	Tencent = models.FloatField(default=0)
-	Alibaba = models.FloatField(default=0)
-	Johnson = models.FloatField(default=0)
-	JPMorgan = models.FloatField(default=0)
+	Enigma = models.FloatField(default=0)
+	Tec = models.FloatField(default=0)
+	GAAP = models.FloatField(default=0)
+	ALPHA = models.FloatField(default=0)
+	LAXMI = models.FloatField(default=0)
+	Punjab = models.FloatField(default=0)
+	Lifepoint = models.FloatField(default=0)
+	RIGHT = models.FloatField(default=0)
 
 
 	def __str__(self):
@@ -39,16 +37,15 @@ class Profile(models.Model):
 
 	def save(self, *args, **kwargs):
 		self.money = round(self.money, 4)
-		self.Apple = round(self.Apple, 4)
-		self.Amazon = round(self.Amazon, 4)
-		self.Microsoft = round(self.Microsoft, 4)
-		self.Alphabet = round(self.Alphabet, 4)
-		self.Berkshire = round(self.Berkshire, 4)
-		self.Facebook = round(self.Facebook, 4)
-		self.Tencent = round(self.Tencent, 4)
-		self.Alibaba = round(self.Alibaba, 4)
-		self.Johnson = round(self.Johnson, 4)
-		self.JPMorgan = round(self.JPMorgan, 4)
+		self.Enigma = round(self.Enigma, 4)
+		self.Tec = round(self.Tec, 4)
+		self.GAAP = round(self.GAAP, 4)
+		self.ALPHA = round(self.ALPHA, 4)
+		self.LAXMI = round(self.LAXMI, 4)
+		self.Punjab = round(self.Punjab, 4)
+		self.Lifepoint = round(self.Lifepoint, 4)
+		self.RIGHT = round(self.RIGHT, 4)
+
 		super(Profile, self).save(*args, **kwargs)	
 
 class Date(models.Model):
