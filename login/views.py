@@ -7,39 +7,139 @@ from .models import company, Date
 
 @login_required
 def site(request):
-	user = request.user
-	all_company = company.objects.all()
 	date = Date.objects.get(pk=1)
+	user = request.user
+	if request.method == 'POST':
+		error = -0.000000001
+		company_str = str(company.objects.get(pk=request.POST['company_id']))
+		company_name = company.objects.get(pk=request.POST['company_id'])
+		opr = str(request.POST['what'])
+		amount = float(request.POST['amount'])
+
+		if company_str == 'Enigma Limited':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.Enigma += amount/(company_name.price1)
+					user.profile.money -= amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()
+
+		elif company_str == 'Tec Solutions':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.Tec += amount/(company_name.price1)
+					user.profile.money -=  amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()
+
+		elif company_str == 'GAAP Cinemas':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.GAAP += amount/(company_name.price1)
+					user.profile.money -= amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()
+		
+		elif company_str == 'ALPHA Leisure Limited':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.ALPHA += amount/(company_name.price1)
+					user.profile.money -= amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()	
+
+		elif company_str == 'LAXMI Bank Ltd.':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.LAXMI += amount/(company_name.price1)
+					user.profile.money -= amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()		
+
+		elif company_str == 'Punjab National Bank':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.Punjab += amount/(company_name.price1)
+					user.profile.money -= amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()
+
+		elif company_str == 'Lifepoint Hospitals':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.Lifepoint += amount/(company_name.price1)
+					user.profile.money -=  amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()
+
+		elif company_str == 'RIGHT Laboratories':
+			if opr == 'buy':
+				if user.profile.money - amount > error:
+					user.profile.RIGHT += amount/(company_name.price1)
+					user.profile.money -= amount
+					user.profile.save()
+			elif opr == 'sell':
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
+					user.profile.money+=amount*(company_name.price1)
+					user.profile.save()
+													
+
+	all_company = company.objects.all()
 	return render(request, 'login/site.html', { 
 			'user': user,
 			'companys': all_company,
 			'date': date,
-		 })
+		 })					
+
 
 @login_required
 def detail(request, id):
 	c_name = str(company.objects.get(pk=id))  
-	if c_name == 'Apple':
-		return render(request, 'login/Apple.html', {'title': 'Details'})
-	elif c_name == 'Amazon':
-		return render(request, 'login/Amazon.html', {'title': 'Details'})	
-	elif c_name == 'Microsoft':
-		return render(request, 'login/Microsoft.html', {'title': 'Details'})
-	elif c_name == 'Alphabet':
-		return render(request, 'login/Alphabet.html', {'title': 'Details'})
-	elif c_name == 'Berkshire Hathaway':
-		return render(request, 'login/Berkshire.html', {'title': 'Details'})
-	elif c_name == 'Facebook':
-		return render(request, 'login/Facebook.html', {'title': 'Details'})
-	elif c_name == 'Tencent':
-		return render(request, 'login/Tencent.html', {'title': 'Details'})	
-	elif c_name == 'Alibaba Group':
-		return render(request, 'login/Alibaba.html', {'title': 'Details'})
-	elif c_name == 'Johnson & Johnson':
-		return render(request, 'login/Johnson.html', {'title': 'Details'})
-	elif c_name == 'JPMorgan Chase':
-		return render(request, 'login/JPMorgan.html', {'title': 'Details'})
-
+	if c_name == 'Enigma Limited':
+		return render(request, 'login/Enigma.html', {'title': 'Enigma Limited'})
+	elif c_name == 'Tec Solutions':
+		return render(request, 'login/Tec.html', {'title': 'Tec Solutions'})	
+	elif c_name == 'GAAP Cinemas':
+		return render(request, 'login/GAAP.html', {'title': 'GAAP Cinemas'})
+	elif c_name == 'ALPHA Leisure Limited':
+		return render(request, 'login/ALPHA.html', {'title': 'ALPHA Leisure Limited'})
+	elif c_name == 'LAXMI Bank Ltd.':
+		return render(request, 'login/LAXMI.html', {'title': 'LAXMI Bank Ltd.'})
+	elif c_name == 'Punjab National Bank':
+		return render(request, 'login/Punjab.html', {'title': 'Punjab National Bank'})
+	elif c_name == 'Lifepoint Hospitals':
+		return render(request, 'login/Lifepoint.html', {'title': 'Lifepoint Hospitals'})	
+	elif c_name == 'RIGHT Laboratories':
+		return render(request, 'login/RIGHT.html', {'title': 'RIGHT Laboratories'})
 						
 
 @login_required
@@ -53,125 +153,102 @@ def round1(request):
 		opr = str(request.POST['what'])
 		amount = float(request.POST['amount'])
 
-		if company_str == 'Apple':
+		if company_str == 'Enigma Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Apple += amount/(company_name.price1)
+					user.profile.Enigma += amount/(company_name.price1)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Apple - amount > error:
-					user.profile.Apple-=amount
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()
 
-		elif company_str == 'Amazon':
+		elif company_str == 'Tec Solutions':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Amazon += amount/(company_name.price1)
+					user.profile.Tec += amount/(company_name.price1)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Amazon - amount > error:
-					user.profile.Amazon-=amount
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()
 
-		elif company_str == 'Microsoft':
+		elif company_str == 'GAAP Cinemas':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Microsoft += amount/(company_name.price1)
+					user.profile.GAAP += amount/(company_name.price1)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Microsoft - amount > error:
-					user.profile.Microsoft-=amount
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()
 		
-		elif company_str == 'Alphabet':
+		elif company_str == 'ALPHA Leisure Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alphabet += amount/(company_name.price1)
+					user.profile.ALPHA += amount/(company_name.price1)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alphabet - amount > error:
-					user.profile.Alphabet-=amount
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()	
 
-		elif company_str == 'Berkshire Hathaway':
+		elif company_str == 'LAXMI Bank Ltd.':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Berkshire += amount/(company_name.price1)
+					user.profile.LAXMI += amount/(company_name.price1)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Berkshire - amount > error:
-					user.profile.Berkshire-=amount
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()		
 
-		elif company_str == 'Facebook':
+		elif company_str == 'Punjab National Bank':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Facebook += amount/(company_name.price1)
+					user.profile.Punjab += amount/(company_name.price1)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Facebook - amount > error:
-					user.profile.Facebook-=amount
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()
 
-		elif company_str == 'Tencent':
+		elif company_str == 'Lifepoint Hospitals':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Tencent += amount/(company_name.price1)
+					user.profile.Lifepoint += amount/(company_name.price1)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Tencent - amount > error:
-					user.profile.Tencent-=amount
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()
 
-		elif company_str == 'Alibaba Group':
+		elif company_str == 'RIGHT Laboratories':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alibaba += amount/(company_name.price1)
+					user.profile.RIGHT += amount/(company_name.price1)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alibaba - amount > error:
-					user.profile.Alibaba-=amount
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
 					user.profile.money+=amount*(company_name.price1)
 					user.profile.save()
-		
-		elif company_str == 'Johnson & Johnson':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.Johnson += amount/(company_name.price1)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.Johnson - amount > error:
-					user.profile.Johnson-=amount
-					user.profile.money+=amount*(company_name.price1)
-					user.profile.save()	
-
-		elif company_str == 'JPMorgan Chase':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.JPMorgan += amount/(company_name.price1)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.JPMorgan - amount > error:
-					user.profile.JPMorgan-=amount
-					user.profile.money+=amount*(company_name.price1)
-					user.profile.save()												
+													
 
 		all_company = company.objects.all()
 		return render(request, 'login/round1.html', { 
@@ -200,125 +277,102 @@ def round2(request):
 		opr = str(request.POST['what'])
 		amount = float(request.POST['amount'])
 
-		if company_str == 'Apple':
+		if company_str == 'Enigma Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Apple += amount/(company_name.price2)
+					user.profile.Enigma += amount/(company_name.price2)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Apple - amount > error:
-					user.profile.Apple-=amount
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()
 
-		elif company_str == 'Amazon':
+		elif company_str == 'Tec Solutions':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Amazon += amount/(company_name.price2)
+					user.profile.Tec += amount/(company_name.price2)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Amazon - amount > error:
-					user.profile.Amazon-=amount
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()
 
-		elif company_str == 'Microsoft':
+		elif company_str == 'GAAP Cinemas':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Microsoft += amount/(company_name.price2)
+					user.profile.GAAP += amount/(company_name.price2)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Microsoft - amount > error:
-					user.profile.Microsoft-=amount
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()
 		
-		elif company_str == 'Alphabet':
+		elif company_str == 'ALPHA Leisure Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alphabet += amount/(company_name.price2)
+					user.profile.ALPHA += amount/(company_name.price2)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alphabet - amount > error:
-					user.profile.Alphabet-=amount
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()	
 
-		elif company_str == 'Berkshire Hathaway':
+		elif company_str == 'LAXMI Bank Ltd.':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Berkshire += amount/(company_name.price2)
+					user.profile.LAXMI += amount/(company_name.price2)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Berkshire - amount > error:
-					user.profile.Berkshire-=amount
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()		
 
-		elif company_str == 'Facebook':
+		elif company_str == 'Punjab National Bank':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Facebook += amount/(company_name.price2)
+					user.profile.Punjab += amount/(company_name.price2)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Facebook - amount > error:
-					user.profile.Facebook-=amount
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()
 
-		elif company_str == 'Tencent':
+		elif company_str == 'Lifepoint Hospitals':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Tencent += amount/(company_name.price2)
+					user.profile.Lifepoint += amount/(company_name.price2)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Tencent - amount > error:
-					user.profile.Tencent-=amount
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()
 
-		elif company_str == 'Alibaba Group':
+		elif company_str == 'RIGHT Laboratories':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alibaba += amount/(company_name.price2)
+					user.profile.RIGHT += amount/(company_name.price2)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alibaba - amount > error:
-					user.profile.Alibaba-=amount
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
 					user.profile.money+=amount*(company_name.price2)
 					user.profile.save()
-		
-		elif company_str == 'Johnson & Johnson':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.Johnson += amount/(company_name.price2)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.Johnson - amount > error:
-					user.profile.Johnson-=amount
-					user.profile.money+=amount*(company_name.price2)
-					user.profile.save()	
-
-		elif company_str == 'JPMorgan Chase':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.JPMorgan += amount/(company_name.price2)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.JPMorgan - amount > error:
-					user.profile.JPMorgan-=amount
-					user.profile.money+=amount*(company_name.price2)
-					user.profile.save()												
+														
 
 		all_company = company.objects.all()
 		return render(request, 'login/round2.html', { 
@@ -347,125 +401,102 @@ def round3(request):
 		opr = str(request.POST['what'])
 		amount = float(request.POST['amount'])
 
-		if company_str == 'Apple':
+		if company_str == 'Enigma Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Apple += amount/(company_name.price3)
+					user.profile.Enigma += amount/(company_name.price3)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Apple - amount > error:
-					user.profile.Apple-=amount
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()
 
-		elif company_str == 'Amazon':
+		elif company_str == 'Tec Solutions':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Amazon += amount/(company_name.price3)
+					user.profile.Tec += amount/(company_name.price3)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Amazon - amount > error:
-					user.profile.Amazon-=amount
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()
 
-		elif company_str == 'Microsoft':
+		elif company_str == 'GAAP Cinemas':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Microsoft += amount/(company_name.price3)
+					user.profile.GAAP += amount/(company_name.price3)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Microsoft - amount > error:
-					user.profile.Microsoft-=amount
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()
 		
-		elif company_str == 'Alphabet':
+		elif company_str == 'ALPHA Leisure Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alphabet += amount/(company_name.price3)
+					user.profile.ALPHA += amount/(company_name.price3)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alphabet - amount > error:
-					user.profile.Alphabet-=amount
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()	
 
-		elif company_str == 'Berkshire Hathaway':
+		elif company_str == 'LAXMI Bank Ltd.':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Berkshire += amount/(company_name.price3)
+					user.profile.LAXMI += amount/(company_name.price3)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Berkshire - amount > error:
-					user.profile.Berkshire-=amount
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()		
 
-		elif company_str == 'Facebook':
+		elif company_str == 'Punjab National Bank':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Facebook += amount/(company_name.price3)
+					user.profile.Punjab += amount/(company_name.price3)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Facebook - amount > error:
-					user.profile.Facebook-=amount
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()
 
-		elif company_str == 'Tencent':
+		elif company_str == 'Lifepoint Hospitals':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Tencent += amount/(company_name.price3)
+					user.profile.Lifepoint += amount/(company_name.price3)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Tencent - amount > error:
-					user.profile.Tencent-=amount
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()
 
-		elif company_str == 'Alibaba Group':
+		elif company_str == 'RIGHT Laboratories':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alibaba += amount/(company_name.price3)
+					user.profile.RIGHT += amount/(company_name.price3)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alibaba - amount > error:
-					user.profile.Alibaba-=amount
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
 					user.profile.money+=amount*(company_name.price3)
 					user.profile.save()
-		
-		elif company_str == 'Johnson & Johnson':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.Johnson += amount/(company_name.price3)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.Johnson - amount > error:
-					user.profile.Johnson-=amount
-					user.profile.money+=amount*(company_name.price3)
-					user.profile.save()	
-
-		elif company_str == 'JPMorgan Chase':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.JPMorgan += amount/(company_name.price3)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.JPMorgan - amount > error:
-					user.profile.JPMorgan-=amount
-					user.profile.money+=amount*(company_name.price3)
-					user.profile.save()												
+													
 
 		all_company = company.objects.all()
 		return render(request, 'login/round3.html', { 
@@ -494,125 +525,102 @@ def round4(request):
 		opr = str(request.POST['what'])
 		amount = float(request.POST['amount'])
 
-		if company_str == 'Apple':
+		if company_str == 'Enigma Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Apple += amount/(company_name.price4)
+					user.profile.Enigma += amount/(company_name.price4)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Apple - amount > error:
-					user.profile.Apple-=amount
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()
 
-		elif company_str == 'Amazon':
+		elif company_str == 'Tec Solutions':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Amazon += amount/(company_name.price4)
+					user.profile.Tec += amount/(company_name.price4)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Amazon - amount > error:
-					user.profile.Amazon-=amount
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()
 
-		elif company_str == 'Microsoft':
+		elif company_str == 'GAAP Cinemas':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Microsoft += amount/(company_name.price4)
+					user.profile.GAAP += amount/(company_name.price4)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Microsoft - amount > error:
-					user.profile.Microsoft-=amount
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()
 		
-		elif company_str == 'Alphabet':
+		elif company_str == 'ALPHA Leisure Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alphabet += amount/(company_name.price4)
+					user.profile.ALPHA += amount/(company_name.price4)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alphabet - amount > error:
-					user.profile.Alphabet-=amount
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()	
 
-		elif company_str == 'Berkshire Hathaway':
+		elif company_str == 'LAXMI Bank Ltd.':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Berkshire += amount/(company_name.price4)
+					user.profile.LAXMI += amount/(company_name.price4)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Berkshire - amount > error:
-					user.profile.Berkshire-=amount
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()		
 
-		elif company_str == 'Facebook':
+		elif company_str == 'Punjab National Bank':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Facebook += amount/(company_name.price4)
+					user.profile.Punjab += amount/(company_name.price4)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Facebook - amount > error:
-					user.profile.Facebook-=amount
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()
 
-		elif company_str == 'Tencent':
+		elif company_str == 'Lifepoint Hospitals':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Tencent += amount/(company_name.price4)
+					user.profile.Lifepoint += amount/(company_name.price4)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Tencent - amount > error:
-					user.profile.Tencent-=amount
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()
 
-		elif company_str == 'Alibaba Group':
+		elif company_str == 'RIGHT Laboratories':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alibaba += amount/(company_name.price4)
+					user.profile.RIGHT += amount/(company_name.price4)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alibaba - amount > error:
-					user.profile.Alibaba-=amount
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
 					user.profile.money+=amount*(company_name.price4)
 					user.profile.save()
-		
-		elif company_str == 'Johnson & Johnson':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.Johnson += amount/(company_name.price4)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.Johnson - amount > error:
-					user.profile.Johnson-=amount
-					user.profile.money+=amount*(company_name.price4)
-					user.profile.save()	
-
-		elif company_str == 'JPMorgan Chase':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.JPMorgan += amount/(company_name.price4)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.JPMorgan - amount > error:
-					user.profile.JPMorgan-=amount
-					user.profile.money+=amount*(company_name.price4)
-					user.profile.save()												
+														
 
 		all_company = company.objects.all()
 		return render(request, 'login/round4.html', { 
@@ -641,125 +649,102 @@ def round5(request):
 		opr = str(request.POST['what'])
 		amount = float(request.POST['amount'])
 
-		if company_str == 'Apple':
+		if company_str == 'Enigma Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Apple += amount/(company_name.price5)
+					user.profile.Enigma += amount/(company_name.price5)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Apple - amount > error:
-					user.profile.Apple-=amount
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()
 
-		elif company_str == 'Amazon':
+		elif company_str == 'Tec Solutions':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Amazon += amount/(company_name.price5)
+					user.profile.Tec += amount/(company_name.price5)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Amazon - amount > error:
-					user.profile.Amazon-=amount
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()
 
-		elif company_str == 'Microsoft':
+		elif company_str == 'GAAP Cinemas':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Microsoft += amount/(company_name.price5)
+					user.profile.GAAP += amount/(company_name.price5)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Microsoft - amount > error:
-					user.profile.Microsoft-=amount
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()
 		
-		elif company_str == 'Alphabet':
+		elif company_str == 'ALPHA Leisure Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alphabet += amount/(company_name.price5)
+					user.profile.ALPHA += amount/(company_name.price5)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alphabet - amount > error:
-					user.profile.Alphabet-=amount
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()	
 
-		elif company_str == 'Berkshire Hathaway':
+		elif company_str == 'LAXMI Bank Ltd.':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Berkshire += amount/(company_name.price5)
+					user.profile.LAXMI += amount/(company_name.price5)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Berkshire - amount > error:
-					user.profile.Berkshire-=amount
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()		
 
-		elif company_str == 'Facebook':
+		elif company_str == 'Punjab National Bank':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Facebook += amount/(company_name.price5)
+					user.profile.Punjab += amount/(company_name.price5)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Facebook - amount > error:
-					user.profile.Facebook-=amount
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()
 
-		elif company_str == 'Tencent':
+		elif company_str == 'Lifepoint Hospitals':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Tencent += amount/(company_name.price5)
+					user.profile.Lifepoint += amount/(company_name.price5)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Tencent - amount > error:
-					user.profile.Tencent-=amount
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()
 
-		elif company_str == 'Alibaba Group':
+		elif company_str == 'RIGHT Laboratories':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alibaba += amount/(company_name.price5)
+					user.profile.RIGHT += amount/(company_name.price5)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alibaba - amount > error:
-					user.profile.Alibaba-=amount
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
 					user.profile.money+=amount*(company_name.price5)
 					user.profile.save()
-		
-		elif company_str == 'Johnson & Johnson':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.Johnson += amount/(company_name.price5)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.Johnson - amount > error:
-					user.profile.Johnson-=amount
-					user.profile.money+=amount*(company_name.price5)
-					user.profile.save()	
-
-		elif company_str == 'JPMorgan Chase':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.JPMorgan += amount/(company_name.price5)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.JPMorgan - amount > error:
-					user.profile.JPMorgan-=amount
-					user.profile.money+=amount*(company_name.price5)
-					user.profile.save()											
+													
 
 		all_company = company.objects.all()
 		return render(request, 'login/round5.html', { 
@@ -788,125 +773,102 @@ def round6(request):
 		opr = str(request.POST['what'])
 		amount = float(request.POST['amount'])
 
-		if company_str == 'Apple':
+		if company_str == 'Enigma Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Apple += amount/(company_name.price6)
+					user.profile.Enigma += amount/(company_name.price6)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Apple - amount > error:
-					user.profile.Apple-=amount
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()
 
-		elif company_str == 'Amazon':
+		elif company_str == 'Tec Solutions':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Amazon += amount/(company_name.price6)
+					user.profile.Tec += amount/(company_name.price6)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Amazon - amount > error:
-					user.profile.Amazon-=amount
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()
 
-		elif company_str == 'Microsoft':
+		elif company_str == 'GAAP Cinemas':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Microsoft += amount/(company_name.price6)
+					user.profile.GAAP += amount/(company_name.price6)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Microsoft - amount > error:
-					user.profile.Microsoft-=amount
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()
 		
-		elif company_str == 'Alphabet':
+		elif company_str == 'ALPHA Leisure Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alphabet += amount/(company_name.price6)
+					user.profile.ALPHA += amount/(company_name.price6)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alphabet - amount > error:
-					user.profile.Alphabet-=amount
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()	
 
-		elif company_str == 'Berkshire Hathaway':
+		elif company_str == 'LAXMI Bank Ltd.':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Berkshire += amount/(company_name.price6)
+					user.profile.LAXMI += amount/(company_name.price6)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Berkshire - amount > error:
-					user.profile.Berkshire-=amount
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()		
 
-		elif company_str == 'Facebook':
+		elif company_str == 'Punjab National Bank':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Facebook += amount/(company_name.price6)
+					user.profile.Punjab += amount/(company_name.price6)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Facebook - amount > error:
-					user.profile.Facebook-=amount
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()
 
-		elif company_str == 'Tencent':
+		elif company_str == 'Lifepoint Hospitals':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Tencent += amount/(company_name.price6)
+					user.profile.Lifepoint += amount/(company_name.price6)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Tencent - amount > error:
-					user.profile.Tencent-=amount
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()
 
-		elif company_str == 'Alibaba Group':
+		elif company_str == 'RIGHT Laboratories':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alibaba += amount/(company_name.price6)
+					user.profile.RIGHT += amount/(company_name.price6)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alibaba - amount > error:
-					user.profile.Alibaba-=amount
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
 					user.profile.money+=amount*(company_name.price6)
 					user.profile.save()
 		
-		elif company_str == 'Johnson & Johnson':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.Johnson += amount/(company_name.price6)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.Johnson - amount > error:
-					user.profile.Johnson-=amount
-					user.profile.money+=amount*(company_name.price6)
-					user.profile.save()	
-
-		elif company_str == 'JPMorgan Chase':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.JPMorgan += amount/(company_name.price6)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.JPMorgan - amount > error:
-					user.profile.JPMorgan-=amount
-					user.profile.money+=amount*(company_name.price6)
-					user.profile.save()
 
 		all_company = company.objects.all()
 		return render(request, 'login/round6.html', { 
@@ -935,125 +897,102 @@ def round7(request):
 		opr = str(request.POST['what'])
 		amount = float(request.POST['amount'])
 
-		if company_str == 'Apple':
+		if company_str == 'Enigma Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Apple += amount/(company_name.price7)
+					user.profile.Enigma += amount/(company_name.price7)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Apple - amount > error:
-					user.profile.Apple-=amount
+				if user.profile.Enigma - amount > error:
+					user.profile.Enigma-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()
 
-		elif company_str == 'Amazon':
+		elif company_str == 'Tec Solutions':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Amazon += amount/(company_name.price7)
+					user.profile.Tec += amount/(company_name.price7)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Amazon - amount > error:
-					user.profile.Amazon-=amount
+				if user.profile.Tec - amount > error:
+					user.profile.Tec-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()
 
-		elif company_str == 'Microsoft':
+		elif company_str == 'GAAP Cinemas':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Microsoft += amount/(company_name.price7)
+					user.profile.GAAP += amount/(company_name.price7)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Microsoft - amount > error:
-					user.profile.Microsoft-=amount
+				if user.profile.GAAP - amount > error:
+					user.profile.GAAP-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()
 		
-		elif company_str == 'Alphabet':
+		elif company_str == 'ALPHA Leisure Limited':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alphabet += amount/(company_name.price7)
+					user.profile.ALPHA += amount/(company_name.price7)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alphabet - amount > error:
-					user.profile.Alphabet-=amount
+				if user.profile.ALPHA - amount > error:
+					user.profile.ALPHA-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()	
 
-		elif company_str == 'Berkshire Hathaway':
+		elif company_str == 'LAXMI Bank Ltd.':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Berkshire += amount/(company_name.price7)
+					user.profile.LAXMI += amount/(company_name.price7)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Berkshire - amount > error:
-					user.profile.Berkshire-=amount
+				if user.profile.LAXMI - amount > error:
+					user.profile.LAXMI-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()		
 
-		elif company_str == 'Facebook':
+		elif company_str == 'Punjab National Bank':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Facebook += amount/(company_name.price7)
+					user.profile.Punjab += amount/(company_name.price7)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Facebook - amount > error:
-					user.profile.Facebook-=amount
+				if user.profile.Punjab - amount > error:
+					user.profile.Punjab-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()
 
-		elif company_str == 'Tencent':
+		elif company_str == 'Lifepoint Hospitals':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Tencent += amount/(company_name.price7)
+					user.profile.Lifepoint += amount/(company_name.price7)
 					user.profile.money -=  amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Tencent - amount > error:
-					user.profile.Tencent-=amount
+				if user.profile.Lifepoint - amount > error:
+					user.profile.Lifepoint-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()
 
-		elif company_str == 'Alibaba Group':
+		elif company_str == 'RIGHT Laboratories':
 			if opr == 'buy':
 				if user.profile.money - amount > error:
-					user.profile.Alibaba += amount/(company_name.price7)
+					user.profile.RIGHT += amount/(company_name.price7)
 					user.profile.money -= amount
 					user.profile.save()
 			elif opr == 'sell':
-				if user.profile.Alibaba - amount > error:
-					user.profile.Alibaba-=amount
+				if user.profile.RIGHT - amount > error:
+					user.profile.RIGHT-=amount
 					user.profile.money+=amount*(company_name.price7)
 					user.profile.save()
-		
-		elif company_str == 'Johnson & Johnson':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.Johnson += amount/(company_name.price7)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.Johnson - amount > error:
-					user.profile.Johnson-=amount
-					user.profile.money+=amount*(company_name.price7)
-					user.profile.save()	
-
-		elif company_str == 'JPMorgan Chase':
-			if opr == 'buy':
-				if user.profile.money - amount > error:
-					user.profile.JPMorgan += amount/(company_name.price7)
-					user.profile.money -= amount
-					user.profile.save()
-			elif opr == 'sell':
-				if user.profile.JPMorgan - amount > error:
-					user.profile.JPMorgan-=amount
-					user.profile.money+=amount*(company_name.price7)
-					user.profile.save()												
+													
 
 		all_company = company.objects.all()
 		return render(request, 'login/round7.html', { 
@@ -1075,35 +1014,30 @@ def round7(request):
 def finish(request):
 	user = request.user		
 	comp = company.objects.get(pk=1)
-	user.profile.money+=user.profile.Apple*comp.price0
+	user.profile.money+=user.profile.Enigma*comp.price0
 	comp = company.objects.get(pk=2)
-	user.profile.money+=user.profile.Amazon*comp.price0
+	user.profile.money+=user.profile.Tec*comp.price0
 	comp = company.objects.get(pk=3)
-	user.profile.money+=user.profile.Microsoft*comp.price0
+	user.profile.money+=user.profile.GAAP*comp.price0
 	comp = company.objects.get(pk=4)
-	user.profile.money+=user.profile.Alphabet*comp.price0
+	user.profile.money+=user.profile.ALPHA*comp.price0
 	comp = company.objects.get(pk=5)
-	user.profile.money+=user.profile.Berkshire*comp.price0
+	user.profile.money+=user.profile.LAXMI*comp.price0
 	comp = company.objects.get(pk=6)
-	user.profile.money+=user.profile.Facebook*comp.price0
+	user.profile.money+=user.profile.Punjab*comp.price0
 	comp = company.objects.get(pk=7)
-	user.profile.money+=user.profile.Tencent*comp.price0
+	user.profile.money+=user.profile.Lifepoint*comp.price0
 	comp = company.objects.get(pk=8)
-	user.profile.money+=user.profile.Alibaba*comp.price0
-	comp = company.objects.get(pk=9)
-	user.profile.money+=user.profile.Johnson*comp.price0
-	comp = company.objects.get(pk=10)
-	user.profile.money+=user.profile.JPMorgan*comp.price0
-	user.profile.Apple=0
-	user.profile.Alibaba=0
-	user.profile.Alphabet=0
-	user.profile.Amazon=0
-	user.profile.Microsoft=0
-	user.profile.Berkshire=0
-	user.profile.Facebook=0
-	user.profile.Tencent=0
-	user.profile.Johnson=0
-	user.profile.JPMorgan=0
+	user.profile.money+=user.profile.RIGHT*comp.price0
+	
+	user.profile.Enigma=0
+	user.profile.RIGHT=0
+	user.profile.ALPHA=0
+	user.profile.Tec=0
+	user.profile.GAAP=0
+	user.profile.LAXMI=0
+	user.profile.Punjab=0
+	user.profile.Lifepoint=0
 	user.profile.save()
 
 	return render(request, 'login/finish.html', { 'user': user })

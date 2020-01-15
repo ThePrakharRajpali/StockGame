@@ -2,9 +2,26 @@
 {% block content %}
 
 <nav id="header-nav" class="navbar navbar-default">
-	<div class="container">
-		<h2 class="align">This is Round 0.</h2>
-	</div>	
+  <div class="container">
+    <h3 class="align">This is Round 0.</h3>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Enigma Limited - {{ user.profile.Enigma }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tec Solutions - {{ user.profile.Tec }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">GAAP Cinemas - {{ user.profile.GAAP }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">ALPHA Leisure Limited - {{ user.profile.ALPHA }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">LAXMI Bank Ltd. - {{ user.profile.LAXMI }}</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Punjab National Bank  - {{ user.profile.Punjab }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lifepoint Hospitals  - {{ user.profile.Lifepoint }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">RIGHT Laboratories - {{ user.profile.RIGHT }}</a></li>
+        </ul>
+      </div>
+    <h3>Money left: {{ user.profile.money }}</h3>
+  </div>  
 </nav>
 
 <!-- Timer -->
@@ -16,7 +33,7 @@
  </div>
  <!-- end -->
 
-<p class="align padding">Contest will began shortly. Until then have a look at the stock price history of different companies whose stock you can buy.</p>
+<p class="align padding">Contest will began shortly. Until then have a look at the history of different companies whose stock you can buy.</p>
 
 <div class="padding">
   <table class="table table-dark">
@@ -43,6 +60,28 @@
   </table>
 </div>
 
+<!-- buy/sell -->
+
+<nav id="header-nav" class="navbar navbar-default">
+  <div class="container">
+    <form action="{% url 'site' %}" method="POST">
+      {% csrf_token %}
+      <select name="company_id">
+        {% for company in companys %}
+          <option value="{{ company.id }}">{{ company.company_name }}</option>
+        {% endfor %}  
+      </select>
+      
+      <select name="what">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+      </select>
+      <label for="amount">Buy(in Rs) Or Sell(in shares) </label>
+      <input type="number" name="amount" id="amount" placeholder="Enter Amount" step="0.01" min="0" required>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>  
+</nav>
 
 
 <!-- Timer -->

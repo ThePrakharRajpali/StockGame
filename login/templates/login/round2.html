@@ -4,23 +4,21 @@
 
 <nav id="header-nav" class="navbar navbar-default">
 	<div class="container">
-		<h3 class="align">This is Round 1.</h3>
+		<h3 class="align">This is Round 2.</h3>
 		  <div class="dropdown">
     		<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
     			<span class="caret"></span></button>
     		<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
     		
-    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Apple - {{ user.profile.Apple }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Amazon - {{ user.profile.Amazon }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Microsoft - {{ user.profile.Microsoft }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Alphabet - {{ user.profile.Alphabet }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Berkshire Hathaway - {{ user.profile.Berkshire }}</a></li>
+    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Enigma Limited - {{ user.profile.Enigma }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tec Solutions - {{ user.profile.Tec }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">GAAP Cinemas - {{ user.profile.GAAP }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">ALPHA Leisure Limited - {{ user.profile.ALPHA }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">LAXMI Bank Ltd. - {{ user.profile.LAXMI }}</a></li>
       			<li role="presentation" class="divider"></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Facebook  - {{ user.profile.Facebook }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tencent  - {{ user.profile.Tencent }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Alibaba Group - {{ user.profile.Alibaba }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Johnson & Johnson - {{ user.profile.Johnson }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">JPMorgan Chase - {{ user.profile.JPMorgan }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Punjab National Bank  - {{ user.profile.Punjab }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lifepoint Hospitals  - {{ user.profile.Lifepoint }}</a></li>
+      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">RIGHT Laboratories - {{ user.profile.RIGHT }}</a></li>
     		</ul>
   		</div>
 		<h3>Money left: {{ user.profile.money }}</h3>
@@ -36,6 +34,13 @@
 </div>
  <!-- end -->
 
+<div class="container">
+  <h1 class="display-3">News Headlines</h1>
+  <p>Retail inflation spikes to 7.35% in December, highest in six years</p>
+  <p>Arrested J&K DSP was building mansion next to Army base | EXCLUSIVE</p>
+  <p>Oscars 2020: 92nd Academy Awards full nominations list</p>
+</div>
+
 <div class="padding">
   <table class="table table-dark">
     <tr>
@@ -46,6 +51,7 @@
       <th>Round 1 price</th>
       <th>Round 2 price</th>
       <th>Round 3 price</th>
+      <th>Round 4 price</th>
     </tr>
     {% for company in companys %}
     <tr>
@@ -54,6 +60,7 @@
       <th>{{ company.cat }}</th>
       <th>{{ company.price0 }}</th>
       <th>{{ company.price1 }}</th>
+      <th></th>
       <th></th>
       <th></th>
     </tr>
