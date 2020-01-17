@@ -4,7 +4,7 @@
 
 <nav id="header-nav" class="navbar navbar-default">
   <div class="container">
-    <h3 class="align">This is Round 10.(Last Round)</h3>
+    <h3 class="align">This is Round 10.</h3>
       <div class="dropdown">
         <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
           <span class="caret"></span></button>
@@ -16,7 +16,7 @@
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">ALPHA Leisure Limited - {{ user.profile.ALPHA }}</a></li>
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">LAXMI Bank Ltd. - {{ user.profile.LAXMI }}</a></li>
             <li role="presentation" class="divider"></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Punjab National Bank  - {{ user.profile.Punjab }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CREDIT INDIA  - {{ user.profile.Punjab }}</a></li>
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lifepoint Hospitals  - {{ user.profile.Lifepoint }}</a></li>
             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">RIGHT Laboratories - {{ user.profile.RIGHT }}</a></li>
         </ul>
@@ -115,7 +115,7 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("space").innerHTML = "EXPIRED";
-     window.location = "{% url 'finish' %}";
+     window.location = "{% url 'round11' %}";
   }
 }, 1000);
 
@@ -160,8 +160,10 @@ window.onload = function () {
       { x: 6, y: {{ tec6 }} },
       { x: 7, y: {{ tec7 }} },
       { x: 8, y: {{ tec8 }} },
-      { x: 9, y: {{ tec9 }}9 },
-      { x: 10 }
+      { x: 9, y: {{ tec9 }} },
+      { x: 10 },
+      { x: 11 },
+      { x: 12 }  
     ]
   },
   {
@@ -181,12 +183,14 @@ window.onload = function () {
       { x: 7, y: {{ lax7 }} },
       { x: 8, y: {{ lax8 }} },
       { x: 9, y: {{ lax9 }} },
-      { x: 10 }
+      { x: 10 },
+      { x: 11 },
+      { x: 12 } 
     ]
   },
   {
     type: "line",
-    name: "Punjab National Bank",
+    name: "CREDIT INDIA",
     color: "#7F6084",
     axisYType: "secondary",
     showInLegend: true,
@@ -201,7 +205,9 @@ window.onload = function () {
       { x: 7, y: {{ pnb7 }} },
       { x: 8, y: {{ pnb8 }} },
       { x: 9, y: {{ pnb9 }} },
-      { x: 10 }
+      { x: 10 },
+      { x: 11 },
+      { x: 12 } 
     ]
   }]
 });
@@ -255,7 +261,9 @@ function toggleDataSerie(e) {
       { x: 7, y: {{ en7 }} },
       { x: 8, y: {{ en8 }} },
       { x: 9, y: {{ en9 }} },
-      { x: 10 }
+      { x: 10 },
+      { x: 11 },
+      { x: 12 } 
     ]
   },
   {
@@ -275,7 +283,9 @@ function toggleDataSerie(e) {
       { x: 7, y: {{ gaa7 }} },
       { x: 8, y: {{ gaa8 }} },
       { x: 9, y: {{ gaa9 }} },
-      { x: 10 }
+      { x: 10 },
+      { x: 11 },
+      { x: 12 } 
     ]
   },
   {
@@ -295,7 +305,9 @@ function toggleDataSerie(e) {
       { x: 7, y: {{ alp7 }} },
       { x: 8, y: {{ alp8 }} },
       { x: 9, y: {{ alp9 }} },
-      { x: 10 }
+      { x: 10 },
+      { x: 11 },
+      { x: 12 } 
     ]
   },
   {
@@ -315,7 +327,9 @@ function toggleDataSerie(e) {
       { x: 7, y: {{ lif7 }} },
       { x: 8, y: {{ lif8 }} },
       { x: 9, y: {{ lif9 }} },
-      { x: 10 }
+      { x: 10 },
+      { x: 11 },
+      { x: 12 } 
     ]
   },
   {
@@ -335,7 +349,9 @@ function toggleDataSerie(e) {
       { x: 7, y: {{ rig7 }} },
       { x: 8, y: {{ rig8 }} },
       { x: 9, y: {{ rig9 }} },
-      { x: 10 }
+      { x: 10 },
+      { x: 11 },
+      { x: 12 } 
     ]
   }]
 });

@@ -17,6 +17,10 @@ class company(models.Model):
 	price8 = models.FloatField(default=0)
 	price9 = models.FloatField(default=0)
 	price10 = models.FloatField(default=0)
+	price11 = models.FloatField(default=0)
+	price12 = models.FloatField(default=0)
+	price13 = models.FloatField(default=0)
+	price14 = models.FloatField(default=0)
 	
 
 	def __str__(self):
@@ -25,7 +29,7 @@ class company(models.Model):
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	feedback = models.CharField(max_length=100, default="Not Submitted")		
-	money = models.FloatField(default=10000)
+	money = models.FloatField(default=1000000)
 	Enigma = models.FloatField(default=0)
 	Tec = models.FloatField(default=0)
 	GAAP = models.FloatField(default=0)

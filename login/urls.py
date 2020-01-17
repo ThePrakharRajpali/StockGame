@@ -14,5 +14,9 @@ urlpatterns = [
     path('round8/', views.round8, name='round8'),
     path('round9/', views.round9, name='round9'),
     path('round10/', views.round10, name='round10'),
+    path('round11/', views.round11, name='round11'),
+    path('round12/', views.round12, name='round12'),
+    path('round13/', views.round13, name='round13'),
+    path('round14/', views.round14, name='round14'),
     path('finish/', views.finish, name='finish'),
 ]

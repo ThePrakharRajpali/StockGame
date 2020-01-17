@@ -1,55 +1,54 @@
-{% load static %}
-<!doctype html>
-<html lang="en">
-<link type="text/css" id="dark-mode" rel="stylesheet" href="">
-<style type="text/css" id="dark-mode-custom-style">
-	
-</style>
-<head>
+{% extends "login/base.html" %}
+{% block content %}
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="#">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    
-    <link rel="stylesheet" type="text/css" href="/static/login/style.css">    
-    
-  
-    <title>Thank You! </title>
-   
 
-  </head>
-  <body data-gr-c-s-loaded="true">
+<nav id="header-nav" class="navbar navbar-default">
+  <div class="container">
+    <h3 class="align">This is Round 11.</h3>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Enigma Limited - {{ user.profile.Enigma }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tec Solutions - {{ user.profile.Tec }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">GAAP Cinemas - {{ user.profile.GAAP }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">ALPHA Leisure Limited - {{ user.profile.ALPHA }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">LAXMI Bank Ltd. - {{ user.profile.LAXMI }}</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CREDIT INDIA  - {{ user.profile.Punjab }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lifepoint Hospitals  - {{ user.profile.Lifepoint }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">RIGHT Laboratories - {{ user.profile.RIGHT }}</a></li>
+        </ul>
+      </div>
+    <h3>Money left: {{ user.profile.money }}</h3>
+  </div>  
+</nav>  
+
+<!-- Timer-->
+<div class="navbar-fixed-top bg-danger shadow p-2 text-center mb-5 text-white ">
+  <div class="container-fluid">
+    <p class="mb-0 font-weight-bold text-uppercase">Time Left</p>
+    <div id="space" class="countdown pt-4"></div>
+  </div>
+</div>
+ <!-- end -->
+
+<div class="container">
+  <h1 class="display-3">News Headlines</h1>
+  <p>Retail inflation spikes to 7.35% in December, highest in six years</p>
+  <p>Arrested J&K DSP was building mansion next to Army base | EXCLUSIVE</p>
+  <p>Oscars 2020: 92nd Academy Awards full nominations list</p>
+</div>
 
 <!-- table -->
 <div class="container">
-	<header>
-      <h1 class="head display-3 text-center">Thank You for Participating</h1><br>
-    </header>	
-    <h3 class="text-center">Your profit is {{ money }}</h3>
-{% if message %}    
-	<h5 class="text-center">{{ message }}</h5>
-{% else %}	
-	<div class="content3 text-center padding">
-		<h5 id="contactme" class="underline">Please take some time to provide us your valuable feedback</h5>
-		<div class="push">
-			<form action="{% url 'finish' %}" method="POST">
-				{% csrf_token %}
-				<label for="message">YOUR MESSAGE</label><br>
-				<textarea name="message" id="message" required rows="5" cols="40" placeholder="Maximum 100 Characters" required></textarea><br><br>
-				<input type="submit" value="Send" class="btn btn-dark">
-			</form>
-		</div>
-	</div> 
-{% endif %}	  
   <table class="table table-dark">
     <tr>
       <th>Company</th>
       <th>Sector</th>
       <th>Category</th>
-      <th>Closing price</th>
+      <th>Current price</th>
     </tr>
     {% for company in companys %}
     <tr>
@@ -60,7 +59,7 @@
       {% else %}
         <th><a href="#chartContainer1">{{ company.cat }}</a></th>
       {% endif %}
-      <th>{{ company.price14 }}</th>
+      <th>{{ company.price10 }}</th>
     </tr>
     {% endfor %}
   </table>
@@ -72,10 +71,53 @@
   <div id="chartContainer1" class="chart padding"></div>
 </div>
 
+<nav id="header-nav" class="navbar navbar-default">
+  <div class="container">
+    <form action="{% url 'round11' %}" method="POST">
+      {% csrf_token %}
+      <select name="company_id">
+        {% for company in companys %}
+          <option value="{{ company.id }}">{{ company.company_name }}</option>
+        {% endfor %}  
+      </select>
+      
+      <select name="what">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+      </select>
+      <label for="amount">Buy(in Rs) Or Sell(in shares) </label>
+      <input type="number" name="amount" id="amount" placeholder="Enter Amount" step="0.01" min="0" required>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>  
+</nav>  
+
 <!-- Timer -->
 
 
 <script>
+// Set the date we're counting down to
+var countDownDate = new Date("{{ date.month }} {{ date.day }}, {{ date.year }} {{ date.hour }}:{{ date.minute }}:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("space").innerHTML = Math.floor(distance / 1000) + "s ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("space").innerHTML = "EXPIRED";
+     window.location = "{% url 'round12' %}";
+  }
+}, 1000);
 
 // chart
 
@@ -120,10 +162,10 @@ window.onload = function () {
       { x: 8, y: {{ tec8 }} },
       { x: 9, y: {{ tec9 }} },
       { x: 10, y: {{ tec10 }} },
-      { x: 11, y: {{ tec11 }} },
-      { x: 12, y: {{ tec12 }} },
-      { x: 13, y: {{ tec13 }} },
-      { x: 14, y: {{ tec14 }} }
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }
     ]
   },
   {
@@ -144,10 +186,10 @@ window.onload = function () {
       { x: 8, y: {{ lax8 }} },
       { x: 9, y: {{ lax9 }} },
       { x: 10, y: {{ lax10 }} },
-      { x: 11, y: {{ lax11 }} },
-      { x: 12, y: {{ lax12 }} },
-      { x: 13, y: {{ lax13 }} },
-      { x: 14, y: {{ lax14 }} }
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }
     ]
   },
   {
@@ -168,10 +210,10 @@ window.onload = function () {
       { x: 8, y: {{ pnb8 }} },
       { x: 9, y: {{ pnb9 }} },
       { x: 10, y: {{ pnb10 }} },
-      { x: 11, y: {{ pnb11 }} },
-      { x: 12, y: {{ pnb12 }} },
-      { x: 13, y: {{ pnb13 }} },
-      { x: 14, y: {{ pnb14 }} }      
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }      
     ]
   }]
 });
@@ -226,10 +268,10 @@ function toggleDataSerie(e) {
       { x: 8, y: {{ en8 }} },
       { x: 9, y: {{ en9 }} },
       { x: 10, y: {{ en10 }} },
-      { x: 11, y: {{ en11 }} },
-      { x: 12, y: {{ en12 }} },
-      { x: 13, y: {{ en13 }} },
-      { x: 14, y: {{ en14 }} }      
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }      
     ]
   },
   {
@@ -250,10 +292,10 @@ function toggleDataSerie(e) {
       { x: 8, y: {{ gaa8 }} },
       { x: 9, y: {{ gaa9 }} },
       { x: 10, y: {{ gaa10 }} },
-      { x: 11, y: {{ gaa11 }} },
-      { x: 12, y: {{ gaa12 }} },
-      { x: 13, y: {{ gaa13 }} },
-      { x: 14, y: {{ gaa14 }} }      
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }      
     ]
   },
   {
@@ -274,10 +316,10 @@ function toggleDataSerie(e) {
       { x: 8, y: {{ alp8 }} },
       { x: 9, y: {{ alp9 }} },
       { x: 10, y: {{ alp10 }} },
-      { x: 11, y: {{ alp11 }} },
-      { x: 12, y: {{ alp12 }} },
-      { x: 13, y: {{ alp13 }} },
-      { x: 14, y: {{ alp14 }} }      
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }      
     ]
   },
   {
@@ -298,10 +340,10 @@ function toggleDataSerie(e) {
       { x: 8, y: {{ lif8 }} },
       { x: 9, y: {{ lif9 }} },
       { x: 10, y: {{ lif10 }} },
-      { x: 11, y: {{ lif11 }} },
-      { x: 12, y: {{ lif12 }} },
-      { x: 13, y: {{ lif13 }} },
-      { x: 14, y: {{ lif14 }} }      
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }      
     ]
   },
   {
@@ -322,10 +364,10 @@ function toggleDataSerie(e) {
       { x: 8, y: {{ rig8 }} },
       { x: 9, y: {{ rig9 }} },
       { x: 10, y: {{ rig10 }} },
-      { x: 11, y: {{ rig11 }} },
-      { x: 12, y: {{ rig12 }} },
-      { x: 13, y: {{ rig13 }} },
-      { x: 14, y: {{ rig14 }} }      
+      { x: 11 },
+      { x: 12 },
+      { x: 13 },
+      { x: 14 }      
     ]
   }]
 });
@@ -343,15 +385,4 @@ function toggleDataSeries(e) {
 }
 </script>
 
-
-
-    <footer class="bottom text-center">
-      <p>©2020 UDGAM, IITG</p>
-    </footer>
-    
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/static/login/chart.js"></script>
-  
-	<span style="position: absolute; left: 0px; top: -20000px; padding: 0px; margin: 0px; border: none; white-space: pre; line-height: normal; font-family: &quot;Trebuchet MS&quot;, Helvetica, sans-serif; font-size: 15px; font-weight: normal; display: none;">Mpgyi</span></body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>
+{% endblock content %}
