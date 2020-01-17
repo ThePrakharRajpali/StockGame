@@ -1,37 +1,36 @@
 {% extends "login/base.html" %}
-
 {% block content %}
 
 
 <nav id="header-nav" class="navbar navbar-default">
-	<div class="container">
-		<h3 class="align">This is Round 1.</h3>
-		  <div class="dropdown">
-    		<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
-    			<span class="caret"></span></button>
-    		<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-    		
-    			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Enigma Limited - {{ user.profile.Enigma }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tec Solutions - {{ user.profile.Tec }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">GAAP Cinemas - {{ user.profile.GAAP }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">ALPHA Leisure Limited - {{ user.profile.ALPHA }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">LAXMI Bank Ltd. - {{ user.profile.LAXMI }}</a></li>
-      			<li role="presentation" class="divider"></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Punjab National Bank  - {{ user.profile.Punjab }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lifepoint Hospitals  - {{ user.profile.Lifepoint }}</a></li>
-      			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">RIGHT Laboratories - {{ user.profile.RIGHT }}</a></li>
-    		</ul>
-  		</div>
-		<h3>Money left: {{ user.profile.money }}</h3>
-	</div>	
-</nav>	
+  <div class="container">
+    <h3 class="align">This is Round 10.(Last Round)</h3>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Your purchased stocks
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+        
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Enigma Limited - {{ user.profile.Enigma }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tec Solutions - {{ user.profile.Tec }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">GAAP Cinemas - {{ user.profile.GAAP }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">ALPHA Leisure Limited - {{ user.profile.ALPHA }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">LAXMI Bank Ltd. - {{ user.profile.LAXMI }}</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Punjab National Bank  - {{ user.profile.Punjab }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lifepoint Hospitals  - {{ user.profile.Lifepoint }}</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">RIGHT Laboratories - {{ user.profile.RIGHT }}</a></li>
+        </ul>
+      </div>
+    <h3>Money left: {{ user.profile.money }}</h3>
+  </div>  
+</nav>  
 
 <!-- Timer-->
 <div class="navbar-fixed-top bg-danger shadow p-2 text-center mb-5 text-white ">
- 	<div class="container-fluid">
+  <div class="container-fluid">
     <p class="mb-0 font-weight-bold text-uppercase">Time Left</p>
     <div id="space" class="countdown pt-4"></div>
-	</div>
+  </div>
 </div>
  <!-- end -->
 
@@ -42,7 +41,6 @@
   <p>Oscars 2020: 92nd Academy Awards full nominations list</p>
 </div>
 
-<!-- prices -->
 <!-- table -->
 <div class="container">
   <table class="table table-dark">
@@ -61,38 +59,38 @@
       {% else %}
         <th><a href="#chartContainer1">{{ company.cat }}</a></th>
       {% endif %}
-      <th>{{ company.price0 }}</th>
+      <th>{{ company.price9 }}</th>
     </tr>
     {% endfor %}
   </table>
 </div>
 
-<!-- charts -->
+<!-- chart -->
 <div class="container">
   <div id="chartContainer" class="chart padding"></div>
   <div id="chartContainer1" class="chart padding"></div>
 </div>
-<!-- buy/sell  -->
+
 <nav id="header-nav" class="navbar navbar-default">
-	<div class="container">
-		<form action="{% url 'round1' %}" method="POST">
-			{% csrf_token %}
-			<select name="company_id">
-				{% for company in companys %}
-					<option value="{{ company.id }}">{{ company.company_name }}</option>
-				{% endfor %}	
-			</select>
-			
-			<select name="what">
-				<option value="buy">Buy</option>
-				<option value="sell">Sell</option>
-			</select>
-			<label for="amount">Buy(in Rs) Or Sell(in shares) </label>
-			<input type="number" name="amount" id="amount" placeholder="Enter Amount" step="0.01" min="0" required>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>	
-</nav>	
+  <div class="container">
+    <form action="{% url 'round10' %}" method="POST">
+      {% csrf_token %}
+      <select name="company_id">
+        {% for company in companys %}
+          <option value="{{ company.id }}">{{ company.company_name }}</option>
+        {% endfor %}  
+      </select>
+      
+      <select name="what">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+      </select>
+      <label for="amount">Buy(in Rs) Or Sell(in shares) </label>
+      <input type="number" name="amount" id="amount" placeholder="Enter Amount" step="0.01" min="0" required>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>  
+</nav>  
 
 <!-- Timer -->
 
@@ -117,7 +115,7 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("space").innerHTML = "EXPIRED";
-     window.location = "{% url 'round2' %}";
+     window.location = "{% url 'finish' %}";
   }
 }, 1000);
 
@@ -154,15 +152,15 @@ window.onload = function () {
     axisYIndex: 1,
     dataPoints: [
       { x: 0, y: {{ tec0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ tec1 }} },
+      { x: 2, y: {{ tec2 }} },
+      { x: 3, y: {{ tec3 }} },
+      { x: 4, y: {{ tec4 }} },
+      { x: 5, y: {{ tec5 }} },
+      { x: 6, y: {{ tec6 }} },
+      { x: 7, y: {{ tec7 }} },
+      { x: 8, y: {{ tec8 }} },
+      { x: 9, y: {{ tec9 }}9 },
       { x: 10 }
     ]
   },
@@ -174,15 +172,15 @@ window.onload = function () {
     showInLegend: true,
     dataPoints: [
       { x: 0, y: {{ lax0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ lax1 }} },
+      { x: 2, y: {{ lax2 }} },
+      { x: 3, y: {{ lax3 }} },
+      { x: 4, y: {{ lax4 }} },
+      { x: 5, y: {{ lax5 }} },
+      { x: 6, y: {{ lax6 }} },
+      { x: 7, y: {{ lax7 }} },
+      { x: 8, y: {{ lax8 }} },
+      { x: 9, y: {{ lax9 }} },
       { x: 10 }
     ]
   },
@@ -194,15 +192,15 @@ window.onload = function () {
     showInLegend: true,
     dataPoints: [
       { x: 0, y: {{ pnb0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ pnb1 }} },
+      { x: 2, y: {{ pnb2 }} },
+      { x: 3, y: {{ pnb3 }} },
+      { x: 4, y: {{ pnb4 }} },
+      { x: 5, y: {{ pnb5 }} },
+      { x: 6, y: {{ pnb6 }} },
+      { x: 7, y: {{ pnb7 }} },
+      { x: 8, y: {{ pnb8 }} },
+      { x: 9, y: {{ pnb9 }} },
       { x: 10 }
     ]
   }]
@@ -248,15 +246,15 @@ function toggleDataSerie(e) {
     axisYIndex: 1,
     dataPoints: [
       { x: 0, y: {{ en0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ en1 }} },
+      { x: 2, y: {{ en2 }} },
+      { x: 3, y: {{ en3 }} },
+      { x: 4, y: {{ en4 }} },
+      { x: 5, y: {{ en5 }} },
+      { x: 6, y: {{ en6 }} },
+      { x: 7, y: {{ en7 }} },
+      { x: 8, y: {{ en8 }} },
+      { x: 9, y: {{ en9 }} },
       { x: 10 }
     ]
   },
@@ -268,15 +266,15 @@ function toggleDataSerie(e) {
     axisYIndex: 2,
     dataPoints: [
       { x: 0, y: {{ gaa0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ gaa1 }} },
+      { x: 2, y: {{ gaa2 }} },
+      { x: 3, y: {{ gaa3 }} },
+      { x: 4, y: {{ gaa4 }} },
+      { x: 5, y: {{ gaa5 }} },
+      { x: 6, y: {{ gaa6 }} },
+      { x: 7, y: {{ gaa7 }} },
+      { x: 8, y: {{ gaa8 }} },
+      { x: 9, y: {{ gaa9 }} },
       { x: 10 }
     ]
   },
@@ -288,15 +286,15 @@ function toggleDataSerie(e) {
     axisYIndex: 3,
     dataPoints: [
       { x: 0, y: {{ alp0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ alp1 }} },
+      { x: 2, y: {{ alp2 }} },
+      { x: 3, y: {{ alp3 }} },
+      { x: 4, y: {{ alp4 }} },
+      { x: 5, y: {{ alp5 }} },
+      { x: 6, y: {{ alp6 }} },
+      { x: 7, y: {{ alp7 }} },
+      { x: 8, y: {{ alp8 }} },
+      { x: 9, y: {{ alp9 }} },
       { x: 10 }
     ]
   },
@@ -308,15 +306,15 @@ function toggleDataSerie(e) {
     showInLegend: true,
     dataPoints: [
       { x: 0, y: {{ lif0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ lif1 }} },
+      { x: 2, y: {{ lif2 }} },
+      { x: 3, y: {{ lif3 }} },
+      { x: 4, y: {{ lif4 }} },
+      { x: 5, y: {{ lif5 }} },
+      { x: 6, y: {{ lif6 }} },
+      { x: 7, y: {{ lif7 }} },
+      { x: 8, y: {{ lif8 }} },
+      { x: 9, y: {{ lif9 }} },
       { x: 10 }
     ]
   },
@@ -328,15 +326,15 @@ function toggleDataSerie(e) {
     showInLegend: true,
     dataPoints: [
       { x: 0, y: {{ rig0 }} }, 
-      { x: 1 },
-      { x: 2 },
-      { x: 3 },
-      { x: 4 },
-      { x: 5 },
-      { x: 6 },
-      { x: 7 },
-      { x: 8 },
-      { x: 9 },
+      { x: 1, y: {{ rig1 }} },
+      { x: 2, y: {{ rig2 }} },
+      { x: 3, y: {{ rig3 }} },
+      { x: 4, y: {{ rig4 }} },
+      { x: 5, y: {{ rig5 }} },
+      { x: 6, y: {{ rig6 }} },
+      { x: 7, y: {{ rig7 }} },
+      { x: 8, y: {{ rig8 }} },
+      { x: 9, y: {{ rig9 }} },
       { x: 10 }
     ]
   }]

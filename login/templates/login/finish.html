@@ -1,13 +1,325 @@
-<!DOCTYPE html>
-<html>
+{% load static %}
+<!doctype html>
+<html lang="en">
+<link type="text/css" id="dark-mode" rel="stylesheet" href="">
+<style type="text/css" id="dark-mode-custom-style">
+	
+</style>
 <head>
-	<meta charset="utf-8">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<title>Thank You!</title>
-</head>
-<body>
-	<h1 class="text-center">Thank You for Participating</h1>
-	<h3 class="text-center">Your score is {{ user.profile.money }}</h3>
-</body>
-</html>
+    <link rel="shortcut icon" href="#">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <link rel="stylesheet" type="text/css" href="/static/login/style.css">    
+    
+  
+    <title>Thank You! </title>
+   
+
+  </head>
+  <body data-gr-c-s-loaded="true">
+
+<!-- table -->
+<div class="container">
+	<header>
+      <h1 class="head display-3 text-center">Thank You for Participating</h1><br>
+    </header>	
+    <h3 class="text-center">Your score is {{ user.profile.money }}</h3>
+{% if message %}    
+	<h5 class="text-center">{{ message }}</h5>
+{% else %}	
+	<div class="content3 text-center padding">
+		<h5 id="contactme" class="underline">Please take some time to provide us your valuable feedback</h5>
+		<div class="push">
+			<form action="{% url 'finish' %}" method="POST">
+				{% csrf_token %}
+				<label for="message">YOUR MESSAGE</label><br>
+				<textarea name="message" id="message" required rows="5" cols="40" placeholder="Maximum 100 Characters" required></textarea><br><br>
+				<input type="submit" value="Send" class="btn btn-dark">
+			</form>
+		</div>
+	</div> 
+{% endif %}	  
+  <table class="table table-dark">
+    <tr>
+      <th>Company</th>
+      <th>Sector</th>
+      <th>Category</th>
+      <th>Closing price</th>
+    </tr>
+    {% for company in companys %}
+    <tr>
+      <th><a href="{% url 'details' company.id %}" target="_blank">{{ company.company_name }}</a></th>
+      <th>{{ company.sector }}</th>
+      {% if company.cat == "Large Cap" %}
+        <th><a href="#chartContainer">{{ company.cat }}</a></th>
+      {% else %}
+        <th><a href="#chartContainer1">{{ company.cat }}</a></th>
+      {% endif %}
+      <th>{{ company.price10 }}</th>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<!-- chart -->
+<div class="container">
+  <div id="chartContainer" class="chart padding"></div>
+  <div id="chartContainer1" class="chart padding"></div>
+</div>
+
+<!-- Timer -->
+
+
+<script>
+
+// chart
+
+window.onload = function () {
+ 
+  var large = new CanvasJS.Chart("chartContainer", {
+  theme: "light2",  
+  title:{
+    text: "Large Cap"
+  },
+  axisY:[{
+    title: "Stock Prices",
+    includeZero: false,
+    // suffix: "k"
+  }],
+  axisX:{
+    title: "Rounds",
+    includeZero: true,
+  },
+  toolTip: {
+    shared: true
+  },
+  legend: {
+    cursor: "pointer",
+    itemclick: toggleDataSerie
+  },
+  data: [{
+    type: "line",
+    name: "Tec Solutions",
+    color: "#369EAD",
+    showInLegend: true,
+    axisYIndex: 1,
+    dataPoints: [
+      { x: 0, y: {{ tec0 }} }, 
+      { x: 1, y: {{ tec1 }} },
+      { x: 2, y: {{ tec2 }} },
+      { x: 3, y: {{ tec3 }} },
+      { x: 4, y: {{ tec4 }} },
+      { x: 5, y: {{ tec5 }} },
+      { x: 6, y: {{ tec6 }} },
+      { x: 7, y: {{ tec7 }} },
+      { x: 8, y: {{ tec8 }} },
+      { x: 9, y: {{ tec9 }} },
+      { x: 10, y: {{ tec10 }} }
+    ]
+  },
+  {
+    type: "line",
+    name: "LAXMI Bank Ltd.",
+    color: "#C24642",
+    axisYIndex: 0,
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ lax0 }} }, 
+      { x: 1, y: {{ lax1 }} },
+      { x: 2, y: {{ lax2 }} },
+      { x: 3, y: {{ lax3 }} },
+      { x: 4, y: {{ lax4 }} },
+      { x: 5, y: {{ lax5 }} },
+      { x: 6, y: {{ lax6 }} },
+      { x: 7, y: {{ lax7 }} },
+      { x: 8, y: {{ lax8 }} },
+      { x: 9, y: {{ lax9 }} },
+      { x: 10, y: {{ lax10 }} }
+    ]
+  },
+  {
+    type: "line",
+    name: "Punjab National Bank",
+    color: "#7F6084",
+    axisYType: "secondary",
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ pnb0 }} }, 
+      { x: 1, y: {{ pnb1 }} },
+      { x: 2, y: {{ pnb2 }} },
+      { x: 3, y: {{ pnb3 }} },
+      { x: 4, y: {{ pnb4 }} },
+      { x: 5, y: {{ pnb5 }} },
+      { x: 6, y: {{ pnb6 }} },
+      { x: 7, y: {{ pnb7 }} },
+      { x: 8, y: {{ pnb8 }} },
+      { x: 9, y: {{ pnb9 }} },
+      { x: 10, y: {{ pnb10 }} }
+    ]
+  }]
+});
+large.render();
+
+function toggleDataSerie(e) {
+  if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    e.dataSeries.visible = false;
+  } else {
+    e.dataSeries.visible = true;
+  }
+  e.large.render();
+}
+
+//mid
+  var mid = new CanvasJS.Chart("chartContainer1", {
+  theme: "light2",  
+  title:{
+    text: "Mid Cap"
+  },
+  axisY:[{
+    title: "Stock Prices",
+    includeZero: false,
+    // suffix: "k"
+  }],
+  axisX:{
+    title: "Rounds",
+    includeZero: true,
+  },
+  toolTip: {
+    shared: true
+  },
+  legend: {
+    cursor: "pointer",
+    itemclick: toggleDataSeries
+  },
+  data: [{
+    type: "line",
+    name: "Enigma Limited",
+    color: "#663399",
+    showInLegend: true,
+    axisYIndex: 1,
+    dataPoints: [
+      { x: 0, y: {{ en0 }} }, 
+      { x: 1, y: {{ en1 }} },
+      { x: 2, y: {{ en2 }} },
+      { x: 3, y: {{ en3 }} },
+      { x: 4, y: {{ en4 }} },
+      { x: 5, y: {{ en5 }} },
+      { x: 6, y: {{ en6 }} },
+      { x: 7, y: {{ en7 }} },
+      { x: 8, y: {{ en8 }} },
+      { x: 9, y: {{ en9 }} },
+      { x: 10, y: {{ en10 }} }
+    ]
+  },
+  {
+    type: "line",
+    name: "GAAP Cinemas",
+    color: "#DC143C",
+    showInLegend: true,
+    axisYIndex: 2,
+    dataPoints: [
+      { x: 0, y: {{ gaa0 }} }, 
+      { x: 1, y: {{ gaa1 }} },
+      { x: 2, y: {{ gaa2 }} },
+      { x: 3, y: {{ gaa3 }} },
+      { x: 4, y: {{ gaa4 }} },
+      { x: 5, y: {{ gaa5 }} },
+      { x: 6, y: {{ gaa6 }} },
+      { x: 7, y: {{ gaa7 }} },
+      { x: 8, y: {{ gaa8 }} },
+      { x: 9, y: {{ gaa9 }} },
+      { x: 10, y: {{ gaa10 }} }
+    ]
+  },
+  {
+    type: "line",
+    name: "ALPHA Leisure Limited",
+    color: "#32CD32",
+    showInLegend: true,
+    axisYIndex: 3,
+    dataPoints: [
+      { x: 0, y: {{ alp0 }} }, 
+      { x: 1, y: {{ alp1 }} },
+      { x: 2, y: {{ alp2 }} },
+      { x: 3, y: {{ alp3 }} },
+      { x: 4, y: {{ alp4 }} },
+      { x: 5, y: {{ alp5 }} },
+      { x: 6, y: {{ alp6 }} },
+      { x: 7, y: {{ alp7 }} },
+      { x: 8, y: {{ alp8 }} },
+      { x: 9, y: {{ alp9 }} },
+      { x: 10, y: {{ alp10 }} }
+    ]
+  },
+  {
+    type: "line",
+    name: "Lifepoint Hospitals",
+    color: "#D2691E",
+    axisYIndex: 0,
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ lif0 }} }, 
+      { x: 1, y: {{ lif1 }} },
+      { x: 2, y: {{ lif2 }} },
+      { x: 3, y: {{ lif3 }} },
+      { x: 4, y: {{ lif4 }} },
+      { x: 5, y: {{ lif5 }} },
+      { x: 6, y: {{ lif6 }} },
+      { x: 7, y: {{ lif7 }} },
+      { x: 8, y: {{ lif8 }} },
+      { x: 9, y: {{ lif9 }} },
+      { x: 10, y: {{ lif10 }} }
+    ]
+  },
+  {
+    type: "line",
+    name: "RIGHT Laboratories",
+    color: "#40E0D0",
+    // axisYType: "secondary",
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ rig0 }} }, 
+      { x: 1, y: {{ rig1 }} },
+      { x: 2, y: {{ rig2 }} },
+      { x: 3, y: {{ rig3 }} },
+      { x: 4, y: {{ rig4 }} },
+      { x: 5, y: {{ rig5 }} },
+      { x: 6, y: {{ rig6 }} },
+      { x: 7, y: {{ rig7 }} },
+      { x: 8, y: {{ rig8 }} },
+      { x: 9, y: {{ rig9 }} },
+      { x: 10, y: {{ rig10 }} }
+    ]
+  }]
+});
+mid.render();
+
+function toggleDataSeries(e) {
+  if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    e.dataSeries.visible = false;
+  } else {
+    e.dataSeries.visible = true;
+  }
+  e.mid.render();
+}
+
+}
+</script>
+
+
+
+    <footer class="bottom text-center">
+      <p>©2020 UDGAM, IITG</p>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/login/chart.js"></script>
+  
+	<span style="position: absolute; left: 0px; top: -20000px; padding: 0px; margin: 0px; border: none; white-space: pre; line-height: normal; font-family: &quot;Trebuchet MS&quot;, Helvetica, sans-serif; font-size: 15px; font-weight: normal; display: none;">Mpgyi</span></body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>

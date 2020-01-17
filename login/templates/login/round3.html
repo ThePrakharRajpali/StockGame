@@ -41,34 +41,37 @@
   <p>Oscars 2020: 92nd Academy Awards full nominations list</p>
 </div>
 
-<!-- prices -->
-<div class="padding">
+<!-- table -->
+<div class="container">
   <table class="table table-dark">
     <tr>
       <th>Company</th>
       <th>Sector</th>
       <th>Category</th>
-      <th>Round 0 price</th>
-      <th>Round 1 price</th>
-      <th>Round 2 price</th>
-      <th>Round 3 price</th>
-      <th>Round 4 price</th>
+      <th>Current price</th>
     </tr>
     {% for company in companys %}
     <tr>
       <th><a href="{% url 'details' company.id %}" target="_blank">{{ company.company_name }}</a></th>
       <th>{{ company.sector }}</th>
-      <th>{{ company.cat }}</th>
-      <th>{{ company.price0 }}</th>
-      <th>{{ company.price1 }}</th>
+      {% if company.cat == "Large Cap" %}
+        <th><a href="#chartContainer">{{ company.cat }}</a></th>
+      {% else %}
+        <th><a href="#chartContainer1">{{ company.cat }}</a></th>
+      {% endif %}
       <th>{{ company.price2 }}</th>
-      <th></th>
-      <th></th>
     </tr>
     {% endfor %}
   </table>
 </div>
 
+<!-- charts -->
+<div class="container">
+  <div id="chartContainer" class="chart padding"></div>
+  <div id="chartContainer1" class="chart padding"></div>
+</div>
+
+<!-- buy/sell -->
 <nav id="header-nav" class="navbar navbar-default">
 	<div class="container">
 		<form action="{% url 'round3' %}" method="POST">
@@ -116,6 +119,239 @@ var x = setInterval(function() {
      window.location = "{% url 'round4' %}";
   }
 }, 1000);
+
+// chart
+
+window.onload = function () {
+ 
+  var large = new CanvasJS.Chart("chartContainer", {
+  theme: "light2",  
+  title:{
+    text: "Large Cap"
+  },
+  axisY:[{
+    title: "Stock Prices",
+    includeZero: false,
+    // suffix: "k"
+  }],
+  axisX:{
+    title: "Rounds",
+    includeZero: true,
+  },
+  toolTip: {
+    shared: true
+  },
+  legend: {
+    cursor: "pointer",
+    itemclick: toggleDataSerie
+  },
+  data: [{
+    type: "line",
+    name: "Tec Solutions",
+    color: "#369EAD",
+    showInLegend: true,
+    axisYIndex: 1,
+    dataPoints: [
+      { x: 0, y: {{ tec0 }} }, 
+      { x: 1, y: {{ tec1 }} },
+      { x: 2, y: {{ tec2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  },
+  {
+    type: "line",
+    name: "LAXMI Bank Ltd.",
+    color: "#C24642",
+    axisYIndex: 0,
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ lax0 }} }, 
+      { x: 1, y: {{ lax1 }} },
+      { x: 2, y: {{ lax2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  },
+  {
+    type: "line",
+    name: "Punjab National Bank",
+    color: "#7F6084",
+    axisYType: "secondary",
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ pnb0 }} }, 
+      { x: 1, y: {{ pnb1 }} },
+      { x: 2, y: {{ pnb2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  }]
+});
+large.render();
+
+function toggleDataSerie(e) {
+  if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    e.dataSeries.visible = false;
+  } else {
+    e.dataSeries.visible = true;
+  }
+  e.large.render();
+}
+
+//mid
+  var mid = new CanvasJS.Chart("chartContainer1", {
+  theme: "light2",  
+  title:{
+    text: "Mid Cap"
+  },
+  axisY:[{
+    title: "Stock Prices",
+    includeZero: false,
+    // suffix: "k"
+  }],
+  axisX:{
+    title: "Rounds",
+    includeZero: true,
+  },
+  toolTip: {
+    shared: true
+  },
+  legend: {
+    cursor: "pointer",
+    itemclick: toggleDataSeries
+  },
+  data: [{
+    type: "line",
+    name: "Enigma Limited",
+    color: "#663399",
+    showInLegend: true,
+    axisYIndex: 1,
+    dataPoints: [
+      { x: 0, y: {{ en0 }} }, 
+      { x: 1, y: {{ en1 }} },
+      { x: 2, y: {{ en2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  },
+  {
+    type: "line",
+    name: "GAAP Cinemas",
+    color: "#DC143C",
+    showInLegend: true,
+    axisYIndex: 2,
+    dataPoints: [
+      { x: 0, y: {{ gaa0 }} }, 
+      { x: 1, y: {{ gaa1 }} },
+      { x: 2, y: {{ gaa2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  },
+  {
+    type: "line",
+    name: "ALPHA Leisure Limited",
+    color: "#32CD32",
+    showInLegend: true,
+    axisYIndex: 3,
+    dataPoints: [
+      { x: 0, y: {{ alp0 }} }, 
+      { x: 1, y: {{ alp1 }} },
+      { x: 2, y: {{ alp2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  },
+  {
+    type: "line",
+    name: "Lifepoint Hospitals",
+    color: "#D2691E",
+    axisYIndex: 0,
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ lif0 }} }, 
+      { x: 1, y: {{ lif1 }} },
+      { x: 2, y: {{ lif2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  },
+  {
+    type: "line",
+    name: "RIGHT Laboratories",
+    color: "#40E0D0",
+    // axisYType: "secondary",
+    showInLegend: true,
+    dataPoints: [
+      { x: 0, y: {{ rig0 }} }, 
+      { x: 1, y: {{ rig1 }} },
+      { x: 2, y: {{ rig2 }} },
+      { x: 3 },
+      { x: 4 },
+      { x: 5 },
+      { x: 6 },
+      { x: 7 },
+      { x: 8 },
+      { x: 9 },
+      { x: 10 }
+    ]
+  }]
+});
+mid.render();
+
+function toggleDataSeries(e) {
+  if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    e.dataSeries.visible = false;
+  } else {
+    e.dataSeries.visible = true;
+  }
+  e.mid.render();
+}
+
+}
 </script>
 
 {% endblock content %}

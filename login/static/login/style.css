@@ -1,3 +1,6 @@
+html {
+  scroll-behavior: smooth;
+}
 
 header {
 	background-color: orange;
@@ -61,10 +64,6 @@ a:hover {
     font-weight: bold;
 }
 
-/*.navbar-fixed-top {
-	position: fixed!important;
-	float: right!important;
-}*/
 table {	
   border-collapse: collapse;
   width: 100%;
@@ -75,3 +74,9 @@ td, th {
   padding: 8px;
 }
 
+
+.chart {
+	height: 370px; 
+	width: 100%;
+	margin-bottom: 50px;
+}

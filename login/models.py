@@ -6,21 +6,25 @@ class company(models.Model):
 	company_name = models.CharField(max_length=50)
 	sector = models.CharField(max_length=25, default="max cap")
 	cat = models.CharField(max_length=25, default="tec")
-	price0 = models.FloatField()
-	price1 = models.FloatField()
-	price2 = models.FloatField()
-	price3 = models.FloatField()
-	price4 = models.FloatField()
-	price5 = models.FloatField()
-	price6 = models.FloatField()
-	price7 = models.FloatField()
+	price0 = models.FloatField(default=0)
+	price1 = models.FloatField(default=0)
+	price2 = models.FloatField(default=0)
+	price3 = models.FloatField(default=0)
+	price4 = models.FloatField(default=0)
+	price5 = models.FloatField(default=0)
+	price6 = models.FloatField(default=0)
+	price7 = models.FloatField(default=0)
+	price8 = models.FloatField(default=0)
+	price9 = models.FloatField(default=0)
+	price10 = models.FloatField(default=0)
 	
 
 	def __str__(self):
 		return self.company_name
 
 class Profile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)		
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	feedback = models.CharField(max_length=100, default="Not Submitted")		
 	money = models.FloatField(default=10000)
 	Enigma = models.FloatField(default=0)
 	Tec = models.FloatField(default=0)
@@ -50,7 +54,7 @@ class Profile(models.Model):
 
 class Date(models.Model):
 	month = models.CharField(max_length=3)
-	year = models.IntegerField(default=2019)
+	year = models.IntegerField(default=2020)
 	num = models.IntegerField(default=0)
 	day = models.IntegerField(default=0)
 	hour = models.IntegerField(default=0)
