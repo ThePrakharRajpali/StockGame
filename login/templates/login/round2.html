@@ -1,4 +1,5 @@
 {% extends "login/base.html" %}
+{% load static %}
 {% block content %}
 
 
@@ -34,11 +35,45 @@
 </div>
  <!-- end -->
 
+<!-- news -->
 <div class="container">
-  <h1 class="display-3">News Headlines</h1>
-  <p>Retail inflation spikes to 7.35% in December, highest in six years</p>
-  <p>Arrested J&K DSP was building mansion next to Army base | EXCLUSIVE</p>
-  <p>Oscars 2020: 92nd Academy Awards full nominations list</p>
+<h1 class="display-3 align">News</h1>
+<div id="carouselExampleControls" class="carousel slide align" data-ride="carousel">
+  <div class="carousel-inner">
+
+ <!-- slide1 -->
+
+    <div class="carousel-item active">
+      <div class="slide">
+        <div class="blogPost--small">
+          <div class="media">
+            <span class="align"><a href="#"><span class="date"><span>20</span> <small>Jan</small></span></a></span>
+            <div class="media-body">
+            <br>
+            <h4 class="media-heading">
+              <img src="{% static 'login/new.gif' %}" alt="">
+              <a href="#">Rupee weakens against US Dollar</a>
+            </h4>
+            <br>
+            <p>
+              The Indian rupee weakened against the US dollar tracking losses in Asian currencies as traders assess a report that said tariffs on Chinese goods will likely stay in place. In a span of 10 days rupee has changed from 71Rs/$ to 74Rs/$
+            </p>
+            </div>
+          </div>
+        </div><!-- / blogPost -->
+    </div>
+    </div>
+
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div><br>
 </div>
 
 <!-- table -->
