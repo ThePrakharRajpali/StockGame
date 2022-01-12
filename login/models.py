@@ -58,7 +58,7 @@ class Profile(models.Model):
 
 class Date(models.Model):
 	month = models.CharField(max_length=3)
-	year = models.IntegerField(default=2020)
+	year = models.IntegerField(default=2022)
 	num = models.IntegerField(default=0)
 	day = models.IntegerField(default=0)
 	hour = models.IntegerField(default=0)
